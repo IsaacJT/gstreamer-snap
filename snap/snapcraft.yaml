@@ -1,0 +1,65 @@
+name: itrue-gstreamer
+base: core22
+version: '0.1'
+summary: Gstreamer tool collection
+description: |
+  This snap contains several gstreamer1.0 tools for manipulating media streams
+  on Ubuntu Classic and Ubuntu Core devices.
+
+  This unofficial snap is not at all supported by the gstreamer project.
+grade: stable
+confinement: strict
+license: GPL2.0 AND LGPL-2.0-only
+website: https://gstreamer.freedesktop.org/
+issues: https://github.com/IsaacJT/gstreamer-snap/issues
+source-code: https://github.com/IsaacJT/gstreamer-snap
+
+parts:
+  dependencies:
+    plugin: nil
+    stage-packages:
+      - bash:${CRAFT_TARGET_ARCH}
+      - v4l-utils:${CRAFT_TARGET_ARCH}
+      - gstreamer1.0-tools:${CRAFT_TARGET_ARCH}
+      - gstreamer1.0-plugins-bad:${CRAFT_TARGET_ARCH}
+      - gstreamer1.0-plugins-good:${CRAFT_TARGET_ARCH}
+      - gstreamer1.0-plugins-ugly:${CRAFT_TARGET_ARCH}
+      - libglu1-mesa:${CRAFT_TARGET_ARCH}
+      - freeglut3:${CRAFT_TARGET_ARCH}
+      - libpulse0:${CRAFT_TARGET_ARCH}
+
+apps:
+  v4l2-ctl:
+    command: usr/bin/v4l2-ctl
+    plugs:
+      - network-bind
+      - network
+      - camera
+  gst-launch:
+    command: usr/bin/gst-launch-1.0
+    plugs:
+      - network-bind
+      - network
+      - camera
+      - opengl
+    environment:
+      GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
+      GST_PLUGIN_SCANNER: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+  gst-inspect:
+    command: usr/bin/gst-inspect-1.0
+    plugs:
+      - camera
+    environment:
+      GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
+      GST_PLUGIN_SCANNER: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+  gst-stats:
+    command: usr/bin/gst-stats-1.0
+    plugs:
+      - camera
+    environment:
+      GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
+      GST_PLUGIN_SCANNER: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+
+layout:
+  /etc/fonts:
+    bind: $SNAP/etc/fonts
