@@ -9,7 +9,7 @@ description: |
   This unofficial snap is not at all supported by the gstreamer project.
 grade: stable
 confinement: strict
-license: GPL2.0
+license: GPL-2.0 AND LGPL-2.0-only
 website: https://gstreamer.freedesktop.org/
 issues: https://github.com/IsaacJT/gstreamer-snap/issues
 source-code: https://github.com/IsaacJT/gstreamer-snap
